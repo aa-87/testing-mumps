@@ -1,1 +1,263 @@
-// app global css in SCSS form
+/* --- Reset & layout --- */
+html,
+body,
+#q-app {
+  height: 100%;
+}
+#q-app {
+  min-height: 100svh;
+}
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --radius-lg: 16px;
+  --radius-md: 14px;
+  --safe-top: env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
+}
+
+/* Light */
+.body--light {
+  --bg: #f6f7f9;
+  --bg-muted: #e9edf2;
+  --surface: #fffffff2;
+  --text: #0b0d10;
+  --text-dim: #3e4654;
+  --border: rgba(110, 120, 135, 0.28);
+  --glass: blur(8px) saturate(140%);
+  --term-bg: #0f1113;
+  --term-fg: #f2f4f8;
+}
+/* Dark */
+.body--dark {
+  --bg: #0a0c10; /* deeper base */
+  --bg-muted: #0f1218;
+  --surface: #141924f2; /* slightly brighter than before */
+  --text: #f6f9ff; /* near-white for headlines */
+  --text-dim: #cfd7e4; /* readable “muted” text */
+  --border: rgba(200, 210, 225, 0.28);
+  --glass: blur(12px) saturate(190%);
+  --term-bg: #101318; /* xterm background */
+  --term-fg: #f6f9ff; /* xterm foreground */
+}
+
+/* Headline gradient made bright on dark */
+.body--dark .gradient-text {
+  background: linear-gradient(90deg, #f6f9ff 0%, #cdd7e6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Subhead/body copy stays readable on dark */
+.sub {
+  color: var(--text-dim);
+}
+
+/* Hero behind terminal: add a subtle dark overlay for legibility */
+.body--dark .term-bg {
+  background:
+    linear-gradient(0deg, rgba(8, 10, 14, 0.55), rgba(8, 10, 14, 0.55)),
+    /* overlay */ url('/hero-mumps-swiss-dark.svg') center/cover no-repeat;
+  opacity: 1; /* full opacity since we add our own overlay */
+  filter: saturate(110%);
+}
+.body--light .term-bg {
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.18)),
+    url('/hero-mumps-swiss-light.svg') center/cover no-repeat;
+  opacity: 1;
+  filter: saturate(105%);
+}
+
+/* Background gradient */
+body {
+  margin: 0;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-muted) 100%);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Page grid: header | content | footer pinned bottom */
+.container {
+  max-width: 1240px;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 24px;
+  padding: 24px 16px;
+  padding-top: calc(16px + var(--safe-top));
+  margin: 0 auto;
+}
+
+/* Surfaces & controls */
+.surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 28px rgba(17, 17, 19, 0.16);
+  backdrop-filter: var(--glass);
+}
+.btn {
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  font-weight: 600;
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  cursor: pointer;
+  transition: transform 0.06s ease;
+}
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+.btn-primary {
+  color: #f6f7f9;
+  background-image: linear-gradient(90deg, #0b0d10, #525a66);
+}
+
+/* Header */
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+}
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/* Content */
+.content {
+  display: grid;
+  gap: 24px;
+}
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+h1 {
+  font-size: clamp(2rem, 4.5vw, 2.6rem);
+  line-height: 1.05;
+  margin: 0;
+}
+.sub {
+  color: var(--text-dim);
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  max-width: 60ch;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #111214, #6b7280);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* Terminal stack with perfectly matched background layer */
+.term-stack {
+  display: grid; /* grid stacking = same intrinsic height */
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.term-bg,
+.term-fore {
+  grid-area: 1 / 1;
+} /* same grid cell */
+.term-bg {
+  z-index: 0;
+} /* background layer */
+.term-fore {
+  z-index: 1;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--term-bg);
+}
+
+/* Terminal height rules (host controls the stack height) */
+.term-wrap {
+  width: 100%;
+  height: 420px;
+} /* ~80x24 on desktop */
+@media (max-width: 1024px) {
+  .term-wrap {
+    height: clamp(320px, 52svh, 560px);
+  }
+}
+
+/* Modules */
+.modules {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+@media (max-width: 1024px) {
+  .modules {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.card {
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+}
+
+/* Footer */
+.footer-basic {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  margin-top: 0;
+}
+.footer-basic a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13px;
+}
+.footer-basic a:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+/* Mobile sticky CTA (only mobile) */
+.sticky-cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 12px calc(8px + var(--safe-bottom));
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-top: 1px solid var(--border);
+  display: none;
+  gap: 10px;
+  justify-content: center;
+  z-index: 30;
+}
+@media (max-width: 1024px) {
+  .sticky-cta {
+    display: flex;
+  }
+}
+
+/* Motion safety */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="420" viewBox="0 0 1600 420">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0D0F13"></stop><stop offset="1" stop-color="#151A22"></stop>
+    </linearGradient>
+    <style>
+      .wm{ fill:#E9EEF6; font-family: Inter, "Helvetica Neue", Helvetica, Arial, system-ui, -apple-system; font-weight:800; letter-spacing:.01em }
+      .strap{ fill:#C7CFDA; font-family: Inter, "Helvetica Neue", Helvetica, Arial, system-ui, -apple-system; font-weight:600; letter-spacing:.18em }
+      .rule{ fill:#2B313A }
+      .ring{ fill:none; stroke:#2B313A; stroke-width:1 }
+      .caret{ stroke:#C7CFDA; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; fill:none }
+      .mono{ fill:#C7CFDA; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New"; }
+      .chip{ fill:#111318; stroke:#2B313A }
+    </style>
+  </defs>
+  <rect width="1600" height="420" fill="url(#bg)"></rect>
+  <text x="80" y="86" class="wm" font-size="64">MUMPS.IO</text>
+  <rect x="80" y="100" width="1440" height="2" class="rule" opacity=".9"></rect>
+  <text x="80" y="128" class="strap" font-size="12">THE M PROGRAMMING LANGUAGE</text>
+  <g transform="translate(1330 248)">
+    <circle cx="0" cy="0" r="56" class="ring" opacity=".6"></circle>
+    <circle cx="0" cy="0" r="42" class="ring" opacity=".6"></circle>
+    <path d="M-18 16 L0 -16 L18 16" class="caret" opacity=".9"></path>
+  </g>
+  <g transform="translate(80 320)" opacity=".85">
+    <rect x="0" y="-22" rx="10" width="410" height="24" class="chip"></rect>
+    <text x="12" y="-6" class="mono" font-size="13">FIB(N) NEW A,B,I,S SET A=0,B=1</text>
+  </g>
+</svg>
