@@ -1,5 +1,16 @@
 PROBLOAD ; Seed sample problems and simple indexes
-  NEW id,k,tags,desc,diff
+ 	;#################################################################
+	;#                                                               #
+	;# Copyright (c) 2025 Ahmed Khaled Abdelrazek                    #
+	;# All rights reserved.                                          #
+	;#                                                               #
+	;#   This source code contains the intellectual property         #
+	;#   of its copyright holder(s), and is made available           #
+	;#   under a license.  If you do not know the terms of           #
+	;#   the license, please stop and do not read further.           #
+	;#                                                               #
+	;#################################################################
+   NEW id,k,tags,desc,diff
   KILL ^PROB,^PROBIDX
   ; id=1..N
   DO ADD(1,"Two Sum","two-sum","Easy","arrays^hash-table","Find two numbers that add to target.",47.3)
@@ -15,7 +26,7 @@ PROBLOAD ; Seed sample problems and simple indexes
   QUIT
 
 ADD(id,title,slug,diff,tags,desc,acc)
-  NEW i,tag,tl SET tl=$$LOW^PROBAPI(title)
+  NEW i,tag,tl SET tl=$zconvert(title,"l")
   SET ^PROB(id,"id")=id
   SET ^PROB(id,"title")=title
   SET ^PROB(id,"slug")=slug

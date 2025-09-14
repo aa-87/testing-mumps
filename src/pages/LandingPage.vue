@@ -10,7 +10,9 @@
       </div>
       <div style="display: flex; gap: 10px; justify-self: end">
         <button class="btn" @click="onSignUp" ref="btnSignup">Sign up</button>
-        <button class="btn btn-primary" @click="onStart" ref="btnStart">Start practicing</button>
+        <button class="btn btn-primary" ref="btnStart" @click="$router.push('/practice')">
+          Start practicing
+        </button>
       </div>
     </div>
 
@@ -58,8 +60,9 @@
   <!-- Mobile sticky CTA -->
   <div class="sticky-cta">
     <button class="btn" @click="onSignUp">Sign up</button>
-   <button class="btn btn-primary" ref="btnStart" @click="$router.push('/practice')">Start practicing</button>
-
+    <button class="btn btn-primary" ref="btnStart" @click="$router.push('/practice')">
+      Start practicing
+    </button>
   </div>
 </template>
 

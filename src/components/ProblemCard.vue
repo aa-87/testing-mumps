@@ -1,11 +1,13 @@
 <template>
   <article
     class="card"
+    :data-key="item.id || item.slug"
     @click="$router.push({ name: 'practice-detail', params: { id: item.id || item.slug } })"
   >
     <div class="row" style="gap: 8px; align-items: center">
       <div class="pill" :class="item.difficulty.toLowerCase()">{{ item.difficulty }}</div>
-      <h3 class="title">{{ item.title }}</h3>
+      <h3 class="title">{{ capitalizeFirstLetter(item.slug.split('-').join(' ')) }}</h3>
+      <code :title="item.title">{{ item.title.substring(0, 200) }}...</code>
     </div>
     <p class="meta">
       <span>{{ Number(item.acceptance ?? 0).toFixed(1) }}% acceptance</span>
@@ -16,7 +18,20 @@
 </template>
 
 <script>
-export default { name: 'ProblemCard', props: { item: { type: Object, required: true } } }
+export default {
+  name: 'ProblemCard',
+  props: {
+    item: { type: Object, required: true },
+  },
+  methods: {
+    capitalizeFirstLetter(str) {
+      if (typeof str !== 'string' || str.length === 0) {
+        return str
+      }
+      return str.charAt(0).toUpperCase() + str.slice(1)
+    },
+  },
+}
 </script>
 
 <style scoped>

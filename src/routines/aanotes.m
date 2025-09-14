@@ -1,5 +1,15 @@
 WS ; Simple WebSocket server helpers for GT.M/YottaDB
- ; Ahmed/GPT-5 Thinking – MVP quality
+	;#################################################################
+	;#                                                               #
+	;# Copyright (c) 2025 Ahmed Khaled Abdelrazek                    #
+	;# All rights reserved.                                          #
+	;#                                                               #
+	;#   This source code contains the intellectual property         #
+	;#   of its copyright holder(s), and is made available           #
+	;#   under a license.  If you do not know the terms of           #
+	;#   the license, please stop and do not read further.           #
+	;#                                                               #
+	;#################################################################
 
  ; ==== HTTP -> WebSocket upgrade ====
 WSHAND(sock) ; sock is your already-accepted TCP socket descriptor

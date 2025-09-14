@@ -13,10 +13,15 @@ aa ;
 main 
  	s aa("aa")="debug^aa"
  	s aa("ping")="ping^aa"
- 	s aa("api/problems/")="ping^aa"
- 	s aa("api/problems/:idOrSlug")="ping^aa"
- 	s aa("api/problems/facet")="ping^aa"
+ 	s aa("api/problems/list")="list^mumpsio"
+ 	s aa("api/problems/get")="get^mumpsio"
+ 	s aa("api/problems/facets")="facets^mumpsio"
  	q
+ 	;
+apiProblemsFacets(q,r,z)
+	s r("mime")="text/html"
+	s r(1)="running...apiProblemsFacets"
+	q
 ping(i,o)
 	s ^PING=($I(^PING))=i
 	s o="pong"
@@ -128,13 +133,7 @@ rsp1(qry) n i,x,name,value
 	q
 m(rtn,args) n aud s rtn="" d mf(.rtn,.args,.aud) Q
 mf(rtn,args,aud) n p S p=q("path") s:$e(p)="/" p=$e(p,2,$l(p))
-	n dn s dn=0 n p1 s p1=$$urldec($p(p,"/",1,9999),1) 
-	n p1 s p1=$$urldec($P(p,"/",1),1)
-	n ptrn s ptrn=p1 i ptrn="" s ptrn="/"
-	d mf2(.rtn,.args,.aud)
-	q
-mf2(rtn,args,aud) n p s p=q("path") s:$e(p)="/" p=$e(p,2,$l(p))
-	n dn s dn=0 n p1 s p1=$$urldec($p(p,"/",1),1)
+	n dn s dn=0 n p1 s p1=$$urldec(p,1)
 	n ptn s ptn=p1 i ptn="" S ptn="/"
 	i ptn=""  s ptn="aa"
 	i ptn="/" s ptn="aa"
@@ -147,6 +146,8 @@ sd  n %wb s %wb="" n size,rstyp,prm,strt,lmt s size=$$vrz(.r) d w($$rspline()_$C
 	i $d(q("set_cookie")) d w("Set-Cookie: "_q("set_cookie")_$C(13,10))
 	i $d(q("location")) d w("Location: "_q("location")_$C(13,10))
 	i $d(r("auth")) d w("WWW-Authenticate: "_r("auth")_$C(13,10)) k r("auth")
+	i $d(r("header")) d  k r("header")
+	. n tmp s tmp="" f  s tmp=$o(r("header",tmp)) q:tmp=""  d w(tmp_": "_r("header",tmp)_$c(13,10))
 	i $d(r("mime")) d w("Content-Type: "_r("mime")_$C(13,10)) k r("mime") i 1
 	e  d w("Content-Type: application/json; charset=utf-8"_$C(13,10))
 	d w("Content-Length: "_size_$C(13,10)_$C(13,10))

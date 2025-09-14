@@ -1,3 +1,4 @@
+import { authState } from '../stores/authState'
 import { defineRouter } from '#q-app/wrappers'
 import {
   createRouter,
@@ -31,6 +32,21 @@ export default defineRouter(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE),
+  })
+
+  Router.beforeEach(async (to) => {
+    if (!authState.loaded) await new Promise((r) => setTimeout(r, 0))
+    const user = authState.user
+    if (to.meta.requiresAuth && !user) {
+      return { name: 'signin', query: { next: to.fullPath } }
+    }
+    if (to.meta.guestOnly && user) {
+      return { name: 'practice-index' }
+    }
+    if (to.meta.requiresAdmin) {
+      if (!user) return { name: 'signin', query: { next: to.fullPath } }
+      if (user.role !== 'admin') return { name: 'practice-index' }
+    }
   })
 
   return Router

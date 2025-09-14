@@ -8,8 +8,6 @@
 </template>
 <script>
 import { defineComponent, nextTick } from 'vue'
-import { Terminal } from 'xterm'
-import { FitAddon } from 'xterm-addon-fit'
 import 'xterm/css/xterm.css'
 
 function getTermTheme() {
@@ -38,6 +36,8 @@ export default defineComponent({
     }
   },
   async mounted() {
+    const Terminal = this.$Terminal
+    const FitAddon = this.$FitAddon
     const term = new Terminal({
       convertEol: true,
       cursorBlink: true,

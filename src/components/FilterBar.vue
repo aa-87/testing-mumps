@@ -1,5 +1,5 @@
 <template>
-  <div class="filterbar surface" ref="bar">
+  <div class="filterbar surface" ref="bar" style="height: 80px">
     <input
       v-model.trim="local.search"
       @input="onSearch"
