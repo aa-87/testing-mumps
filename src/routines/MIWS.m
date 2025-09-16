@@ -292,6 +292,10 @@ RSPLINE()
 	I $D(HTTPRSP("partial")) Q "HTTP/1.1 206 Partial Content"
 	I '$G(HTTPERR),'$D(HTTPREQ("location")) Q "HTTP/1.1 200 OK"
 	I '$G(HTTPERR),$D(HTTPREQ("location")) Q "HTTP/1.1 201 Created"
+	
+	 
+	I $G(HTTPERR)=409 Q "HTTP/1.1 409 Conflict"
+	I $G(HTTPERR)=503 Q "HTTP/1.1 503 Service Unavailable"
 	I $G(HTTPERR)=400 Q "HTTP/1.1 400 Bad Request"
 	I $G(HTTPERR)=401 Q "HTTP/1.1 401 Unauthorized"
 	I $G(HTTPERR)=404 Q "HTTP/1.1 404 Not Found"
